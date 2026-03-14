@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2563eb;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e5e7eb;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1> Game Leaderboard</h1>
+    <pre><code> 
+import java.util.Scanner;
+import java.util.Random;
+
+/* ===================== SINGLY LINKED LIST NODE ===================== */
+class Node {
+    int score;
+    Node next;
+
+    Node(int score) {
+        this.score = score;
+        this.next = null;
+    }
+}
+
+/* ===================== DOUBLY LINKED LIST NODE ===================== */
+class DLLNode {
+    Player player;
+    DLLNode prev;
+    DLLNode next;
+
+    DLLNode(Player player) {
+        this.player = player;
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+/* ===================== PLAYER CLASS ===================== */
+class Player {
+    int id;
+    String name;
+    int score;
+    int rank;
+    Node history;
+
+    Player(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.score = 0;
+        this.rank = 0;
+        this.history = null;
+    }
+}
+
+/* ===================== MAIN CLASS ===================== */
+public class main {
+
+    static Player[] players = new Player[100];
+    static int count = 0;
+
+    static DLLNode dllHead = null;
+
+    static Scanner sc = new Scanner(System.in);
+    static Random rand = new Random();
+    static LinearSearch linearSearch = new LinearSearch();
+
+    /* ===================== LINEAR SEARCH BY ID ===================== */
+    static int searchByIdLinear(int id) {
+        int[] ids = new int[count];
+        for (int i = 0; i < count; i++) {
+            ids[i] = players[i].id;
+        }
+        return linearSearch.search(ids, id, count);
+    }
+
+    /* ===================== REGISTER PLAYER ===================== */
+    static void registerPlayer() {
+        System.out.print("Enter Player ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        if (searchByIdLinear(id) != -1) {
+            System.out.println("Player ID already exists!");
+            return;
+        }
+
+        System.out.print("Enter Player Name: ");
+        String name = sc.nextLine();
+
+        players[count++] = new Player(id, name);
+        System.out.println("Player Registered Successfully!");
+    }
+
+    /* ===================== SEARCH BY ID ===================== */
+    static void searchById() {
+        System.out.print("Enter Player ID: ");
+        int id = sc.nextInt();
+
+        int index = searchByIdLinear(id);
+        if (index != -1)
+            displayPlayer(players[index]);
+        else
+            System.out.println("Player not found!");
+    }
+
+    /* ===================== SEARCH BY NAME (LINEAR SEARCH) ===================== */
+    static void searchByName() {
+        System.out.print("Enter Player Name: ");
+        sc.nextLine();
+        String name = sc.nextLine();
+
+        int j = 0;
+        while (j < count) {
+            if (players[j].name.equals(name)) {
+                displayPlayer(players[j]);
+                return;
+            }
+            j = j + 1;
+        }
+        System.out.println("Player not found!");
+    }
+
+    /* ===================== PLAY MATCH ===================== */
+    static void playMatch() {
+        System.out.print("Enter Player ID: ");
+        int id = sc.nextInt();
+
+        int index = searchByIdLinear(id);
+        if (index == -1) {
+            System.out.println("Player not found!");
+            return;
+        }
+
+        int score = rand.nextInt(100);
+        players[index].score += score;
+
+        Node n = new Node(score);
+        n.next = players[index].history;
+        players[index].history = n;
+
+        quickSort(players, 0, count - 1);
+        assignRanks();
+        buildDoublyLinkedList();
+
+        System.out.println("Match Played! Score Added: " + score);
+    }
+
+    /* ===================== QUICK SORT ===================== */
+    static void quickSort(Player[] arr, int si, int ei) {
+        if (si < ei) {
+            int p = partition(arr, si, ei);
+            quickSort(arr, si, p - 1);
+            quickSort(arr, p + 1, ei);
+        }
+    }
+
+    static int partition(Player[] arr, int si, int ei) {
+        int pivot = arr[ei].score;
+        int i = si - 1;
+
+        for (int j = si; j < ei; j++) {
+            if (arr[j].score > pivot) {
+                i++;
+                Playe
+ 
+r temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        Player temp = arr[i + 1];
+        arr[i + 1] = arr[ei];
+        arr[ei] = temp;
+
+        return i + 1;
+    }
+
+    /* ===================== MERGE SORT LEADERBOARD ===================== */
+    static void displayLeaderboard() {
+        mergeSort(players, 0, count - 1);
+        assignRanks();
+        buildDoublyLinkedList();
+
+        System.out.println("\n--- LEADERBOARD ---");
+        displayUsingDLL();
+    }
+
+    static void mergeSort(Player[] arr, int si, int ei) {
+        if (si < ei) {
+            int mi = (si + ei) / 2;
+            mergeSort(arr, si, mi);
+            mergeSort(arr, mi + 1, ei);
+            merge(arr, si, mi, ei);
+        }
+    }
+
+    static void merge(Player[] arr, int si, int mi, int ei) {
+        Player[] temp = new Player[ei - si + 1];
+        int i = si, j = mi + 1, k = 0;
+
+        while (i <= mi && j <= ei) {
+            if (arr[i].score >= arr[j].score)
+                temp[k++] = arr[i++];
+            else
+                temp[k++] = arr[j++];
+        }
+
+        while (i <= mi) temp[k++] = arr[i++];
+        while (j <= ei) temp[k++] = arr[j++];
+
+        for (int x = si, y = 0; x <= ei; x++, y++)
+            arr[x] = temp[y];
+    }
+
+    static void assignRanks() {
+        for (int i = 0; i < count; i++)
+            players[i].rank = i + 1;
+    }
+
+    /* ===================== DOUBLY LINKED LIST ===================== */
+    static void buildDoublyLinkedList() {
+        dllHead = null;
+        DLLNode prev = null;
+
+        for (int i = 0; i < count; i++) {
+            DLLNode node = new DLLNode(players[i]);
+            if (dllHead == null)
+                dllHead = node;
+
+            node.prev = prev;
+            if (prev != null)
+                prev.next = node;
+
+            prev = node;
+        }
+    }
+
+    static void displayUsingDLL() {
+        DLLNode temp = dllHead;
+        while (temp != null) {
+            System.out.println(temp.player.rank + ". " +
+                    temp.player.name + " | Score: " + temp.player.score);
+            temp = temp.next;
+        }
+    }
+
+    /* ===================== MATCH HISTORY ===================== */
+    static void viewMatchHistory() {
+        System.out.print("Enter Player ID: ");
+        int id = sc.nextInt();
+
+        int index = searchByIdLinear(id);
+        if (index == -1) {
+            System.out.println("Player not found!");
+            return;
+        }
+
+        Node temp = players[index].history;
+        System.out.println("Match History:");
+        while (temp != null) {
+            System.out.println("Score: " + temp.score);
+            temp = temp.next;
+        }
+    }
+
+    static void displayPlayer(Player p) {
+        System.out.println("ID   : " + p.id);
+        System.out.println("Name : " + p.name);
+        System.out.println("Score: " + p.score);
+        System.out.println("Rank : " + p.rank);
+    }
+
+    /* ===================== MENU ===================== */
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n===== GAME LEADERBOARD SYSTEM =====");
+            System.out.println("1. Register Player");
+            System.out.println("2. Play Match");
+            System.out.println("3. Display Leaderboard");
+            System.out.println("4. Search Player by Name");
+            System.out.println("5. Search Player by ID (Linear Search)");
+            System.out.println("6. View Match History");
+            System.out.println("7. Exit");
+            System.out.print("Enter Choice: ");
+
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1: registerPlayer(); break;
+                case 2: playMatch(); break;
+                case 3: displayLeaderboard(); break;
+                case 4: searchByName(); break;
+                case 5: searchById(); break;
+                case 6: viewMatchHistory(); break;
+                case 7: System.exit(0);
+                default: System.out.println("Invalid Choice!");
+            }
+        }
+    }
+}
+
+    </code></pre>
+    <footer class="footer">
+    <p>© 2026 Arun Yadav</p>
+</footer>
+</body>
+</html>

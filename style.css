@@ -1,0 +1,271 @@
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    color: #2c3e50;
+}
+ 
+.navbar {
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4facfe;
+}
+
+.logo span {
+    color: #00f2fe;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #576574;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: #4facfe;
+} 
+
+.hero {
+    padding: 70px 10%;
+    text-align: center;
+}
+
+.hero-card {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 50px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.name-gradient {
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+}
+
+.hero-tags {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.hero-tags span {
+    color: #54a0ff;
+    font-weight: 600;
+}
+
+.hero-btn {
+    display: inline-block;
+    margin-top: 15px;
+    background: #4facfe;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.hero-btn:hover {
+    background: #1d4ed8;
+} 
+
+.container {
+    padding: 40px 10%;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 30px;
+    border-radius: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+ 
+.about-flex {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.profile-box img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #6c63ff;
+}
+
+.bio {
+    color: #64748b;
+    line-height: 1.6;
+}
+ 
+.skills-flex {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.skill-item {
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 15px;
+    color: #2e86de;
+    font-weight: 600;
+}
+
+.skill-item:hover {
+    transform: scale(1.1);
+}
+
+/* PROJECT */
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.project-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.project-box:hover {
+    transform: translateY(-6px);
+}
+
+.icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.project-tag {
+    font-size: 0.7rem;
+    color: #4facfe;
+    background: #f0f9ff;
+    padding: 3px 8px;
+    border-radius: 8px;
+}
+ 
+.card-sec {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    margin: 20px 10%;
+}
+
+.achievement-list {
+    padding-left: 20px;
+    line-height: 1.8;
+}
+ 
+.center {
+    text-align: center;
+}
+
+.contact-links {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.contact-links a {
+    background: #f7f8f9;
+    color: #151414;
+    padding: 8px 18px;
+    border-radius: 15px;
+    text-decoration: none;
+}
+ 
+.footer {
+    text-align: center;
+    padding: 30px;
+    margin-top: 20px;
+}
+ 
+.achievement-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.achieve-card {
+    text-decoration: none;
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.achieve-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.achieve-card:hover {
+    transform: translateY(-6px);
+}
+ 
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+ 
+.skill-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.skill-card:hover {
+    transform: translateY(-6px);
+}
+ 
+.view-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 18px;
+    background: #4facfe;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.view-btn:hover {
+    background: #1d4ed8;
+}
